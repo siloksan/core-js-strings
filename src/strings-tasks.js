@@ -326,7 +326,8 @@ function countVowels(str) {
 function isPalindrome(str) {
   const withoutWhitespaceStr = str.replaceAll(/\W/gim, '');
   const firstString = withoutWhitespaceStr.toLocaleLowerCase();
-  const secondStringReverse = reverseString(withoutWhitespaceStr).toLocaleLowerCase();
+  const secondStringReverse =
+    reverseString(withoutWhitespaceStr).toLocaleLowerCase();
   return firstString === secondStringReverse;
 }
 
@@ -360,8 +361,11 @@ function findLongestWord(sentence) {
  *   reverseWords('Hello World') => 'olleH dlroW'
  *   reverseWords('The Quick Brown Fox') => 'ehT kciuQ nworB xoF'
  */
-function reverseWords(/* str */) {
-  throw new Error('Not implemented');
+function reverseWords(str) {
+  return str
+    .split(' ')
+    .map((word) => reverseString(word))
+    .join(' ');
 }
 
 /**
@@ -375,8 +379,23 @@ function reverseWords(/* str */) {
  *   invertCase('JavaScript is Fun') => 'jAVAsCRIPT IS fUN'
  *   invertCase('12345') => '12345'
  */
-function invertCase(/* str */) {
-  throw new Error('Not implemented');
+function invertCase(str) {
+  // let invertString = '';
+  // for (let i = 0; i < str.length; i += 1) {
+  //   invertString +=
+  //     str.charAt(i).toUpperCase() === str.charAt(i)
+  //       ? str.charAt(i).toLocaleLowerCase()
+  //       : str.charAt(i).toLocaleUpperCase();
+  // }
+  // return invertString;
+  return str
+    .split('')
+    .map((item) => {
+      return item === item.toUpperCase()
+        ? item.toLowerCase()
+        : item.toUpperCase();
+    })
+    .join('');
 }
 
 /**
@@ -392,8 +411,8 @@ function invertCase(/* str */) {
  *   getStringFromTemplate('John','Doe') => 'Hello, John Doe!'
  *   getStringFromTemplate('Chuck','Norris') => 'Hello, Chuck Norris!'
  */
-function getStringFromTemplate(/* firstName, lastName */) {
-  throw new Error('Not implemented');
+function getStringFromTemplate(firstName, lastName) {
+  return `Hello, ${firstName} ${lastName}!`;
 }
 
 /**
@@ -406,8 +425,8 @@ function getStringFromTemplate(/* firstName, lastName */) {
  *   extractNameFromTemplate('Hello, John Doe!') => 'John Doe'
  *   extractNameFromTemplate('Hello, Chuck Norris!') => 'Chuck Norris'
  */
-function extractNameFromTemplate(/* value */) {
-  throw new Error('Not implemented');
+function extractNameFromTemplate(value) {
+  return value.slice(value.indexOf(' ') + 1, value.length - 1);
 }
 
 /**
@@ -421,8 +440,8 @@ function extractNameFromTemplate(/* value */) {
  *   unbracketTag('<span>') => 'span'
  *   unbracketTag('<a>') => 'a'
  */
-function unbracketTag(/* str */) {
-  throw new Error('Not implemented');
+function unbracketTag(str) {
+  return str.slice(1, str.length - 1);
 }
 
 /**
@@ -440,8 +459,8 @@ function unbracketTag(/* str */) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  return str.split(';');
 }
 
 /**
@@ -460,8 +479,27 @@ function extractEmails(/* str */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const alphabetToLowerCase = 'abcdefghijklmnopqrstuvwxyz';
+  let encodedString = '';
+  for (let i = 0; i < str.length; i += 1) {
+    if (/\W/.test(str.charAt(i))) encodedString += str.charAt(i);
+    const indexLetterInAlphabet = alphabetToLowerCase.indexOf(
+      str.charAt(i).toLowerCase()
+    );
+    const newIndexLetterInAlphabet =
+      indexLetterInAlphabet < 13 && indexLetterInAlphabet >= 0
+        ? indexLetterInAlphabet + 13
+        : indexLetterInAlphabet - 13;
+    if (str.charAt(i).toLowerCase() === str.charAt(i)) {
+      encodedString += alphabetToLowerCase.charAt(newIndexLetterInAlphabet);
+    } else {
+      encodedString += alphabetToLowerCase
+        .charAt(newIndexLetterInAlphabet)
+        .toUpperCase();
+    }
+  }
+  return encodedString;
 }
 
 /**
@@ -488,8 +526,63 @@ function encodeToRot13(/* str */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const deck = [
+    'A♣',
+    '2♣',
+    '3♣',
+    '4♣',
+    '5♣',
+    '6♣',
+    '7♣',
+    '8♣',
+    '9♣',
+    '10♣',
+    'J♣',
+    'Q♣',
+    'K♣',
+    'A♦',
+    '2♦',
+    '3♦',
+    '4♦',
+    '5♦',
+    '6♦',
+    '7♦',
+    '8♦',
+    '9♦',
+    '10♦',
+    'J♦',
+    'Q♦',
+    'K♦',
+    'A♥',
+    '2♥',
+    '3♥',
+    '4♥',
+    '5♥',
+    '6♥',
+    '7♥',
+    '8♥',
+    '9♥',
+    '10♥',
+    'J♥',
+    'Q♥',
+    'K♥',
+    'A♠',
+    '2♠',
+    '3♠',
+    '4♠',
+    '5♠',
+    '6♠',
+    '7♠',
+    '8♠',
+    '9♠',
+    '10♠',
+    'J♠',
+    'Q♠',
+    'K♠',
+  ];
+
+  return deck.indexOf(value);
 }
 
 module.exports = {
